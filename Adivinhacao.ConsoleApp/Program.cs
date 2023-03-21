@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace Adivinhacao.ConsoleApp
+﻿namespace Adivinhacao.ConsoleApp
 {
     internal class Program
     {
