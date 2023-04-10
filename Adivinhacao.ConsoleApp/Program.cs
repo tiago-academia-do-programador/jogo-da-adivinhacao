@@ -31,20 +31,14 @@
             double totalDePontos = 1000;
 
             // Menu Principal
-            Console.WriteLine("***************************************");
-            Console.WriteLine("* Bem-vindo(a) ao Jogo da Adivinhação *");
-            Console.WriteLine("***************************************");
+            ApresentarTitulo();
 
             // Escolha de dificuldade
-            Console.WriteLine();
-            Console.WriteLine("Escolha o nível de dificuldade: ");
-            Console.WriteLine("(1) Fácil (2) Médio (3) Difícil");
-            Console.Write("Escolha: ");
-            nivelDificuldade = Convert.ToInt32(Console.ReadLine());
+            nivelDificuldade = SelecionarDificuldade();
 
-            switch(nivelDificuldade)
+            switch (nivelDificuldade)
             {
-                case 1: 
+                case 1:
                     totalDeTentativas = 15;
                     break;
                 case 2:
@@ -59,6 +53,7 @@
             Random random = new Random();
             int numeroSecreto = random.Next(1, 21);
 
+            // Jogo Principal
             for (int quantidadeChutes = 1; quantidadeChutes <= totalDeTentativas; quantidadeChutes++)
             {
                 Console.Clear();
@@ -101,5 +96,24 @@
 
             Console.ReadLine();
         }
+
+        private static void ApresentarTitulo()
+        {
+            Console.WriteLine("***************************************");
+            Console.WriteLine("* Bem-vindo(a) ao Jogo da Adivinhação *");
+            Console.WriteLine("***************************************");
+        }
+
+        private static int SelecionarDificuldade()
+        {
+            int nivelDificuldade;
+            Console.WriteLine();
+            Console.WriteLine("Escolha o nível de dificuldade: ");
+            Console.WriteLine("(1) Fácil (2) Médio (3) Difícil");
+            Console.Write("Escolha: ");
+            nivelDificuldade = Convert.ToInt32(Console.ReadLine());
+            return nivelDificuldade;
+        }
+
     }
 }
