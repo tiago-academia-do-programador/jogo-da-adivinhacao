@@ -27,74 +27,27 @@
 
         static void Main(string[] args)
         {
-            int nivelDificuldade = 1, totalDeTentativas = 0;
-            double totalDePontos = 1000;
-
-            // Menu Principal
             ApresentarTitulo();
 
-            // Escolha de dificuldade
-            nivelDificuldade = SelecionarDificuldade();
+            int dificuldade = SelecionarDificuldade();
 
-            switch (nivelDificuldade)
+            Adivinhacao jogo = new Adivinhacao(dificuldade);
+
+            while (true)
             {
-                case 1:
-                    totalDeTentativas = 15;
-                    break;
-                case 2:
-                    totalDeTentativas = 10;
-                    break;
-                case 3:
-                    totalDeTentativas = 5;
-                    break;
-            }
+                int palpite = ObterPalpite();
 
-            // Gerando o número aleatório
-            Random random = new Random();
-            int numeroSecreto = random.Next(1, 21);
-
-            // Jogo Principal
-            for (int quantidadeChutes = 1; quantidadeChutes <= totalDeTentativas; quantidadeChutes++)
-            {
-                Console.Clear();
-
-                Console.WriteLine($"Tentativa {quantidadeChutes} de {totalDeTentativas}");
-
-                // Input do usuário
-                Console.WriteLine();
-                Console.WriteLine("Qual o seu chute? ");
-                string chute = Console.ReadLine();
-
-                int numeroChute = Convert.ToInt32(chute);
-
-                bool acertou = numeroChute == numeroSecreto;
-                bool menor = numeroChute < numeroSecreto;
-
-                // Processamento
-                if (acertou)
+                if (jogo.JogadorAcertou(palpite) || jogo.JogadorPerdeu())
                 {
-                    Console.WriteLine("Parabéns, você acertou!");
-                    Console.WriteLine($"Você fez {totalDePontos} pontos!");
+                    ApresentarMensagem(jogo.MensagemFinal);
                     break;
                 }
-                else if (menor)
-                    Console.WriteLine("Seu chute foi menor que o número secreto");
-                else
-                    Console.WriteLine("Seu chute foi maior que o número secreto");
 
-                double pontosPerdidos = Math.Abs((numeroChute - numeroSecreto) / 2);
+                ApresentarMensagem(jogo.MensagemDica);
 
-                totalDePontos = totalDePontos - pontosPerdidos;
-
-                Console.WriteLine($"Você fez {totalDePontos} pontos!");
-
-                if (quantidadeChutes <= totalDeTentativas)
-                    Console.WriteLine("Que azar! Tente novamente!");
-
-                Console.ReadLine();
+                ApresentarMensagem(jogo.TotalDePontos);
             }
 
-            Console.ReadLine();
         }
 
         private static void ApresentarTitulo()
@@ -104,16 +57,37 @@
             Console.WriteLine("***************************************");
         }
 
+        private static void ApresentarMensagem(string mensagem)
+        {
+            Console.WriteLine();
+            Console.WriteLine(mensagem);
+            Console.ReadLine();
+        }
+
         private static int SelecionarDificuldade()
         {
             int nivelDificuldade;
+
             Console.WriteLine();
             Console.WriteLine("Escolha o nível de dificuldade: ");
             Console.WriteLine("(1) Fácil (2) Médio (3) Difícil");
             Console.Write("Escolha: ");
+
             nivelDificuldade = Convert.ToInt32(Console.ReadLine());
             return nivelDificuldade;
         }
 
+        private static int ObterPalpite()
+        {
+            Console.Clear();
+
+            Console.WriteLine();
+            Console.WriteLine("Qual o seu chute? ");
+            string chute = Console.ReadLine();
+
+            int numeroChute = Convert.ToInt32(chute);
+
+            return numeroChute;
+        }
     }
 }
